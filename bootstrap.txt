@@ -4,6 +4,7 @@ pip3 install flask
 pip3 install flask_restful
 pip3 install bson
 pip3 install pymongo
+pip3 install aws
 sudo yum install git -y
 mkdir ecomm_profile
 cd ecomm_profile/
