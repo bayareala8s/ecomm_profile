@@ -5,10 +5,11 @@ pip3 install flask_restful
 pip3 install bson
 pip3 install pymongo
 pip3 install aws
+pip3 install boto3
 sudo yum install git -y
-mkdir ecomm_profile
-cd ecomm_profile/
+mkdir /home/ec2-user/ecomm_profile
+cd /home/ec2-user/ecomm_profile
 git clone https://github.com/bayareala8s/ecomm_profile.git
-cd ecomm_profile/
+cd /home/ec2-user/ecomm_profile/ecomm_profile/
 export FLASK_APP=ping.py
 flask run --host=0.0.0.0 --port=8080
