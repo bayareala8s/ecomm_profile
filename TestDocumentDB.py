@@ -42,7 +42,7 @@ if __name__ == '__main__':
     data = f.read()
     logger.info("Sending JSON data:")
     logger.info(data)
-    customerDocument.put_record(json.dumps(data))
+    customerDocument.put_record(json_util.dumps(data))
 
 
 # mongo --ssl --host ecomm-profile-documentdb-cluster.cluster-c7myxlzkr5l7.us-west-2.docdb.amazonaws.com:27017 --sslCAFile rds-combined-ca-bundle.pem --username ecommprofile --password password
