@@ -32,7 +32,7 @@ class TestDocument:
 
 if __name__ == '__main__':
 
-    documentdb_client = pymongo.MongoClient('mongodb://ecommprofile:<insertYourPassword>@ecomm-profile-documentdb-cluster.cluster-c7myxlzkr5l7.us-west-2.docdb.amazonaws.com:27017/?ssl=true&ssl_ca_certs=rds-combined-ca-bundle.pem&replicaSet=rs0&readPreference=secondaryPreferred&retryWrites=false')
+    documentdb_client = pymongo.MongoClient('mongodb://ecommprofile:password@ecomm-profile-documentdb-cluster.cluster-c7myxlzkr5l7.us-west-2.docdb.amazonaws.com:27017/?ssl=true&ssl_ca_certs=rds-combined-ca-bundle.pem&replicaSet=rs0&readPreference=secondaryPreferred&retryWrites=false')
     database = 'ecomm_profile'
     collection = 'customer'
 
@@ -43,3 +43,14 @@ if __name__ == '__main__':
     logger.info("Sending JSON data:")
     logger.info(data)
     customerDocument.put_record(json.dumps(data))
+
+
+# mongo --ssl --host ecomm-profile-documentdb-cluster.cluster-c7myxlzkr5l7.us-west-2.docdb.amazonaws.com:27017 --sslCAFile rds-combined-ca-bundle.pem --username ecommprofile --password password
+
+# echo -e "[mongodb-org-3.6] \nname=MongoDB Repository\nbaseurl=https://repo.mongodb.org/yum/amazon/2013.03/mongodb-org/3.6/x86_64/\ngpgcheck=1 \nenabled=1 \ngpgkey=https://www.mongodb.org/static/pgp/server-3.6.asc" | sudo tee /etc/yum.repos.d/mongodb-org-3.6.repo
+
+# sudo yum install -y mongodb-org-shell
+
+# use ecomm_profile
+# show dbs
+# db.createCollection("customer")
