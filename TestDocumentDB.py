@@ -33,8 +33,8 @@ class TestDocument:
 if __name__ == '__main__':
 
     documentdb_client = pymongo.MongoClient('mongodb://ecommprofile:password@ecomm-profile-documentdb-cluster.cluster-c7myxlzkr5l7.us-west-2.docdb.amazonaws.com:27017/?ssl=true&ssl_ca_certs=rds-combined-ca-bundle.pem&replicaSet=rs0&readPreference=secondaryPreferred&retryWrites=false')
-    database = 'ecomm_profile'
-    collection = 'customer'
+    database =  documentdb_client.ecomm_profile
+    collection = database.customer
 
     customerDocument = TestDocument(documentdb_client,database,collection)
 
