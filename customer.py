@@ -208,7 +208,7 @@ class Register(Resource):
         postedData = request.get_json()
         if postedData is None:
             abort(400, message="Customer is empty")
-        logger.info("Payload of customer registration: " + postedData)
+        logger.info("Payload of customer registration: " + json.dumps(postedData))
 
         # insert customer document to collection
         customer_object_id = self.put_record_documentdb(postedData)
