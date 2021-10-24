@@ -149,25 +149,25 @@ class Customer(Resource):
 
 
 class Register(Resource):
-    def __init__(self,documentdb_client,database,collection,stream_name, kinesis_client):
+    def __init__(self):
 
         """
         :param documentdb_client: A DocumentDB client.
         :param database: DocumentDB database.
         :param collection: DocumentDB collection
         """
-        self.documentdb_client = documentdb_client
-        self.database = database
-        self.collection = collection
+        self.documentdb_client = pymongo.MongoClient('mongodb://ecommprofile:password@ecomm-profile-documentdb-cluster.cluster-c7myxlzkr5l7.us-west-2.docdb.amazonaws.com:27017/?ssl=true&ssl_ca_certs=rds-combined-ca-bundle.pem&replicaSet=rs0&readPreference=secondaryPreferred&retryWrites=false')
+        self.database = self.documentdb_client.ecomm_profile
+        self.collection = self.database.customer
 
         """
         :param kinesis_client: A Boto3 Kinesis client.
         :param stream_name: Kinesis stream name
         """
-        self.kinesis_client = kinesis_client
-        self.name = stream_name
+        self.kinesis_client = boto3.client('kinesis', region_name='us-west-2')
+        self.name = "ecomm_profile_customer_stream"
         self.details = None
-        self.stream_exists_waiter = kinesis_client.get_waiter('stream_exists')
+        self.stream_exists_waiter = self.kinesis_client.get_waiter('stream_exists')
 
     def put_record_documentdb(self, data):
         """
@@ -234,15 +234,7 @@ class Register(Resource):
 ##
 api.add_resource(Customer, '/api/v1/customer/<customer_email>')
 api.add_resource(Register, '/api/v1/customer/register')
+
 if __name__ == '__main__':
 
-    # DocumentDB configs
-    documentdb_client = pymongo.MongoClient('mongodb://ecommprofile:password@ecomm-profile-documentdb-cluster.cluster-c7myxlzkr5l7.us-west-2.docdb.amazonaws.com:27017/?ssl=true&ssl_ca_certs=rds-combined-ca-bundle.pem&replicaSet=rs0&readPreference=secondaryPreferred&retryWrites=false')
-    # collection name
-    database = documentdb_client.ecomm_profile
-    # document name
-    collection = database.customer
-
-    stream_name = "ecomm_profile_customer_stream"
-    customerDocument = Register(documentdb_client, database, collection,stream_name, boto3.client('kinesis', region_name='us-west-2'))
     app.run()
