@@ -211,9 +211,9 @@ class Register(Resource):
         logger.info("Payload of customer registration: " + json.dumps(postedData))
 
         # insert customer document to collection
-        customer_object_id = self.put_record_documentdb(postedData)
+        customer_response = self.put_record_documentdb(postedData)
         if customer_object_id is not None:
-            logger.info("Registered customer: " + customer_object_id.inserted_id)
+            logger.info("Registered customer: " + json.dumps(customer_response))
         else:
             abort(400, message="DB error not able to insert record")
 
