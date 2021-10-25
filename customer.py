@@ -220,7 +220,7 @@ class Register(Resource):
         # insert customer event to collection
         partition_key = postedData["customer_id"]
         logger.info("Partition Key: " + str(partition_key))
-        self.put_record_kinesisstream(postedData,partition_key)
+        self.put_record_kinesisstream(json_util.dumps(postedData),partition_key)
 
         return json.loads(json_util.dumps(postedData))
 
